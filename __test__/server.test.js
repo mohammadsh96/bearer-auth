@@ -1,9 +1,6 @@
 'use strict';
-process.env.SECRET = "TEST_SECRET";
-
 const base64 = require('base-64');
 const middleware = require('../src/auth/middlewear/basic');
-
 const users=require("../src/auth/model/user.model");
 process.env.SECRET = "TEST_SECRET";
 const { app } = require('../src/server'); 
@@ -127,15 +124,7 @@ let userInfo = {
     admin: { username: 'admin-basic', password: 'password' },
   };
   
-  
-  beforeAll(async () => {
-    await sequelize.sync();
- 
-  });
-  afterAll(async () => {
-    await sequelize.drop();
-  });
-  
+
   describe('Auth Middleware', () => {
   
     
