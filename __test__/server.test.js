@@ -53,18 +53,18 @@ describe('Auth Router', () => {
   it('signin user at bearer auth token', async () => {
     let { username, password } = userData.testUser;
 
-    // First, use basic to login to get a token
+   
     const response = await mockRequest.post('/signin')
       .auth(username, password);
 
     accessToken = response.body.token;
 
-    // First, use basic to login to get a token
+    
     const bearerResponse = await mockRequest
       .get('/users')
       .set('Authorization', `Bearer ${accessToken}`);
 
-    // Not checking the value of the response, only that we "got in"
+    
     expect(bearerResponse.status).toBe(200);
   });
 
@@ -94,12 +94,12 @@ describe('Auth Router', () => {
 
   it(' invalid token', async () => {
 
-    // First, use basic to login to get a token
+  
     const response = await mockRequest.get('/users')
       .set('Authorization', `Bearer foobar`)
     const userList = response.body;
 
-    // Not checking the value of the response, only that we "got in"
+   
     expect(response.status).toBe(403);
     expect(response.text).toEqual("Invalid Signin");
     expect(userList.length).toBeFalsy();
@@ -127,10 +127,10 @@ let userInfo = {
     admin: { username: 'admin-basic', password: 'password' },
   };
   
-  // Pre-load our database with fake users
+  
   beforeAll(async () => {
     await sequelize.sync();
-    //await users.create(userInfo.admin);
+ 
   });
   afterAll(async () => {
     await sequelize.drop();
@@ -138,10 +138,7 @@ let userInfo = {
   
   describe('Auth Middleware', () => {
   
-    // admin:password: YWRtaW46cGFzc3dvcmQ=
-    // admin:foo: YWRtaW46Zm9v
-  
-    // Mock the express req/res/next that we need for each middleware call
+    
     const req = {};
     const res = {
       status: jest.fn(() => res),
@@ -154,7 +151,7 @@ let userInfo = {
       it('loger test', () => {
         const basicAuthString = base64.encode('username:password');
   
-        // Change the request to match this test case
+        
         req.headers = {
           authorization: `Basic ${basicAuthString}`,
         };
@@ -170,7 +167,7 @@ let userInfo = {
       it('admin login', () => {
         let basicAuthString = base64.encode(`${userInfo.admin.username}:${userInfo.admin.password}`);
   
-        // Change the request to match this test case
+        
         req.headers = {
           authorization: `Basic ${basicAuthString}`,
         };
